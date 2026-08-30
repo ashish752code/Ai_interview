@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interview Report</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#060d1f;color:#e0e6ff;font-family:'Inter','Segoe UI',sans-serif;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0d1520}::-webkit-scrollbar-thumb{background:#2d3748;border-radius:3px}
+
+.wrap{max-width:900px;margin:0 auto;padding:36px 20px 80px}
+
+/* Header */
+.rhead{text-align:center;background:#111827;border:1px solid #2d3748;border-radius:20px;padding:40px 30px;margin-bottom:24px}
+.rhead-icon{font-size:3rem;margin-bottom:10px}
+h1{font-size:1.9rem;font-weight:900;background:linear-gradient(135deg,#6c7fff,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.rcand{color:#8892b0;font-size:.92rem;margin-bottom:22px}
+
+.scores{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin:20px 0}
+.sbox{text-align:center;padding:18px 24px;background:#0d1520;border-radius:14px;border:1px solid #2d3748;min-width:110px}
+.sbig{font-size:2.6rem;font-weight:900;line-height:1;margin-bottom:5px}
+.slbl{color:#8892b0;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px}
+.ga{color:#34d399}.gb{color:#6c7fff}.gc{color:#f59e0b}.gd{color:#f87171}
+
+.hire{display:inline-block;padding:7px 18px;border-radius:20px;font-size:.88rem;font-weight:800;margin-top:8px}
+.hstr{background:#0a2a1a;color:#34d399;border:1px solid #34d399}
+.hyes{background:#0a1a2a;color:#6c7fff;border:1px solid #6c7fff}
+.hmay{background:#1a1a0a;color:#f59e0b;border:1px solid #f59e0b}
+.hno{background:#1a0a0a;color:#f87171;border:1px solid #f87171}
+.hrat{color:#8892b0;font-size:.82rem;margin-top:6px}
+
+/* Cards */
+.card{background:#111827;border:1px solid #2d3748;border-radius:16px;padding:22px;margin-bottom:18px}
+.ctitle{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#8892b0;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+
+/* Bars */
+.trow{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tname{min-width:170px;font-size:.88rem}
+.btrack{flex:1;height:9px;background:#1a2332;border-radius:5px;overflow:hidden}
+.bfill{height:100%;border-radius:5px}
+.bh{background:linear-gradient(90deg,#34d399,#10b981)}
+.bm{background:linear-gradient(90deg,#f59e0b,#d97706)}
+.bl{background:linear-gradient(90deg,#f87171,#ef4444)}
+.bpct{font-size:.82rem;font-weight:800;min-width:40px;text-align:right}
+
+/* Tags */
+.tagrow{display:flex;flex-wrap:wrap;gap:7px}
+.tag{padding:5px 12px;border-radius:8px;font-size:.8rem;font-weight:600}
+.tg{background:#0a2a1a;color:#34d399;border:1px solid #34d399}
+.tr{background:#2a0a0a;color:#f87171;border:1px solid #f87171}
+.ty{background:#1a1a0a;color:#f59e0b;border:1px solid #f59e0b}
+.tb{background:#0a1a2a;color:#6c7fff;border:1px solid #6c7fff}
+
+/* Q&A */
+.qitem{border:1px solid #2d3748;border-radius:12px;padding:14px;margin-bottom:10px;border-left:4px solid #2d3748}
+.qi-h{border-left-color:#34d399}.qi-m{border-left-color:#f59e0b}.qi-l{border-left-color:#f87171}.qi-s{border-left-color:#4a5568;opacity:.7}
+.qimeta{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.qinum{font-size:.78rem;font-weight:800;color:#6c7fff}
+.qitopic{font-size:.72rem;background:#1a2332;color:#a78bfa;padding:2px 8px;border-radius:5px}
+.qisc{font-size:.78rem;font-weight:900;margin-left:auto}
+.sc-h{color:#34d399}.sc-m{color:#f59e0b}.sc-l{color:#f87171}.sc-s{color:#4a5568}
+.qiq{font-size:.92rem;color:#e0e6ff;font-weight:500}
+
+/* Rec */
+.recitem{display:flex;gap:10px;padding:10px;background:#0d1520;border-radius:9px;margin-bottom:7px}
+.recnum{width:22px;height:22px;background:linear-gradient(135deg,#6c7fff,#a78bfa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;flex-shrink:0;color:#fff}
+.rectxt{font-size:.87rem;color:#b0bec5;line-height:1.5}
+
+/* violations */
+.vrow{display:flex;justify-content:space-between;padding:7px 12px;border-radius:8px;margin-bottom:5px;font-size:.82rem}
+.vrh{background:#2a1a1a;color:#f87171}.vrm{background:#1a1a0a;color:#f59e0b}.vrl{background:#1a2332;color:#6c7fff}
+
+/* match */
+.matchrow{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.matchscore{font-size:1.7rem;font-weight:900;color:#6c7fff}
+.matchbar{flex:1;height:11px;background:#1a2332;border-radius:6px;overflow:hidden}
+.matchfill{height:100%;background:linear-gradient(90deg,#6c7fff,#a78bfa);border-radius:6px;transition:width 1s ease}
+
+/* encourage */
+.enc{background:linear-gradient(135deg,#131f35,#1a132a);border:1px solid #2d3748;border-radius:16px;padding:26px;text-align:center;margin-bottom:18px}
+.encico{font-size:2.2rem;margin-bottom:10px}
+.enctxt{color:#b0bec5;font-size:.95rem;line-height:1.7;font-style:italic}
+
+.actrow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+.btn{padding:11px 26px;border-radius:12px;border:none;font-size:.92rem;font-weight:700;cursor:pointer;transition:.2s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.bp{background:linear-gradient(135deg,#6c7fff,#a78bfa);color:#fff}
+.bs{background:#1a2332;color:#e0e6ff;border:1px solid #2d3748}
+
+@media print{.actrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="rhead">
+  <div class="rhead-icon">📊</div>
+  <h1>Interview Report</h1>
+  <div class="rcand" id="rcand">Loading...</div>
+  <div class="scores">
+    <div class="sbox"><div class="sbig ga" id="rScore">--</div><div class="slbl">Score</div></div>
+    <div class="sbox"><div class="sbig gb" id="rGrade">--</div><div class="slbl">Grade</div></div>
+    <div class="sbox"><div class="sbig gc" id="rPct">--%</div><div class="slbl">Percentage</div></div>
+    <div class="sbox"><div class="sbig" id="rAns" style="color:#a78bfa">--</div><div class="slbl">Answered</div></div>
+  </div>
+  <div class="hire" id="hireBadge">—</div>
+  <div class="hrat" id="hireRat"></div>
+</div>
+
+<div class="card">
+  <div class="ctitle">🎯 Topic Performance</div>
+  <div id="topicBars">—</div>
+</div>
+
+<div class="card">
+  <div class="ctitle">💼 Skills Assessment</div>
+  <div style="font-size:.82rem;color:#8892b0;margin-bottom:10px">Resume vs Performance Match</div>
+  <div class="matchrow"><div class="matchscore" id="matchScore">—</div><div class="matchbar"><div class="matchfill" id="matchFill" style="width:0%"></div></div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div>
+      <div style="color:#34d399;font-size:.72rem;font-weight:800;margin-bottom:7px">✅ Demonstrated</div>
+      <div class="tagrow" id="demoSkills"></div>
+    </div>
+    <div>
+      <div style="color:#f87171;font-size:.72rem;font-weight:800;margin-bottom:7px">❌ Not Demonstrated</div>
+      <div class="tagrow" id="missSkills"></div>
+    </div>
+  </div>
+  <div style="color:#34d399;font-size:.72rem;font-weight:800;margin-bottom:7px">🌟 Strong Topics</div>
+  <div class="tagrow" id="strongT"></div>
+  <div style="color:#f59e0b;font-size:.72rem;font-weight:800;margin:12px 0 7px">⚠ Weak Areas</div>
+  <div class="tagrow" id="weakT"></div>
+</div>
+
+<div class="card">
+  <div class="ctitle">📝 Question Breakdown</div>
+  <div id="qaBreak">—</div>
+</div>
+
+<div class="card" id="recsCard" style="display:none">
+  <div class="ctitle">🎓 Recommendations</div>
+  <div id="recs"></div>
+</div>
+
+<div class="card">
+  <div class="ctitle">🔒 Proctoring</div>
+  <div style="color:#8892b0;font-size:.88rem;margin-bottom:12px" id="proctSum"></div>
+  <div id="vlist"></div>
+</div>
+
+<div class="enc">
+  <div class="encico">💫</div>
+  <div class="enctxt" id="encText">Loading...</div>
+</div>
+
+<div class="actrow">
+  <button class="btn bp" onclick="window.print()">🖨️ Print</button>
+  <button class="btn bs" onclick="location.href='index.html'">🔄 New Interview</button>
+</div>
+
+</div>
+<script>
+window.addEventListener('DOMContentLoaded',()=>{
+  const raw=localStorage.getItem('ivReport');
+  const meta=JSON.parse(localStorage.getItem('ivMeta')||'{}');
+  if(!raw){
+    document.body.innerHTML='<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:14px"><div style="font-size:3rem">📭</div><div style="font-size:1.1rem;color:#e0e6ff">No report found</div><a href="index.html" style="color:#6c7fff;text-decoration:none">← New Interview</a></div>';
+    return;
+  }
+  render(JSON.parse(raw), meta);
+});
+
+function render(r, meta) {
+  document.getElementById('rcand').textContent='Report for '+(meta.candidate_name||'Candidate');
+  const pct=r.percentage||0, sc=r.overall_score||0, grade=r.grade||'N/A';
+
+  document.getElementById('rScore').textContent=sc+'/10';
+  document.getElementById('rGrade').textContent=grade;
+  document.getElementById('rPct').textContent=pct+'%';
+  document.getElementById('rAns').textContent=(r.questions_answered||0)+'/'+(r.questions_total||0);
+
+  const scEl=document.getElementById('rScore');
+  scEl.className='sbig '+(pct>=80?'ga':pct>=60?'gb':pct>=40?'gc':'gd');
+
+  const hire=r.hiring_recommendation||'Maybe';
+  const hEl=document.getElementById('hireBadge');
+  hEl.textContent=hire;
+  const hcls={'Strong Hire':'hstr','Hire':'hyes','Maybe':'hmay','No Hire':'hno'};
+  hEl.className='hire '+(hcls[hire]||'hmay');
+  document.getElementById('hireRat').textContent=r.hiring_rationale||'';
+
+  // Topics
+  const tEl=document.getElementById('topicBars');
+  if(r.topic_scores&&r.topic_scores.length){
+    tEl.innerHTML=r.topic_scores.map(t=>{
+      const p=t.percentage||0;
+      const c=p>=70?'bh':p>=40?'bm':'bl';
+      const col=p>=70?'#34d399':p>=40?'#f59e0b':'#f87171';
+      return `<div class="trow"><div class="tname">${t.topic}</div><div class="btrack"><div class="bfill ${c}" style="width:${p}%"></div></div><div class="bpct" style="color:${col}">${p.toFixed(0)}%</div></div>`;
+    }).join('');
+  } else tEl.innerHTML='<div style="color:#4a5568;font-size:.85rem">No topic data</div>';
+
+  // Match
+  const mp=r.resume_match_score||0;
+  document.getElementById('matchScore').textContent=mp+'%';
+  document.getElementById('matchFill').style.width=mp+'%';
+
+  const ta=t=>`<span class="tag tg">${t}</span>`;
+  const tr=t=>`<span class="tag tr">${t}</span>`;
+  const ty=t=>`<span class="tag ty">${t}</span>`;
+
+  document.getElementById('demoSkills').innerHTML=(r.skills_demonstrated||[]).map(ta).join('')||'<span style="color:#4a5568;font-size:.82rem">None</span>';
+  document.getElementById('missSkills').innerHTML=(r.skills_not_demonstrated||[]).map(tr).join('')||'<span style="color:#4a5568;font-size:.82rem">None</span>';
+  document.getElementById('strongT').innerHTML=(r.strong_topics||[]).map(ta).join('')||'<span style="color:#4a5568;font-size:.82rem">—</span>';
+  document.getElementById('weakT').innerHTML=(r.weak_topics||[]).map(ty).join('')||'<span style="color:#4a5568;font-size:.82rem">—</span>';
+
+  // Q&A
+  const qa=r.detailed_scores||[];
+  document.getElementById('qaBreak').innerHTML=qa.length?qa.map((q,i)=>{
+    const sc=q.score||0, p=sc*10;
+    const cls=!q.answered?'qi-s':p>=70?'qi-h':p>=40?'qi-m':'qi-l';
+    const scls=!q.answered?'sc-s':p>=70?'sc-h':p>=40?'sc-m':'sc-l';
+    return `<div class="qitem ${cls}"><div class="qimeta"><span class="qinum">Q${i+1}</span><span class="qitopic">${q.topic||'General'}</span><span class="qisc ${scls}">${q.answered?sc+'/10':'SKIPPED'}</span></div><div class="qiq">${q.q}</div></div>`;
+  }).join(''):'<div style="color:#4a5568;font-size:.85rem">No data</div>';
+
+  // Recs
+  if(r.recommendations&&r.recommendations.length){
+    document.getElementById('recsCard').style.display='block';
+    document.getElementById('recs').innerHTML=r.recommendations.map((rec,i)=>`<div class="recitem"><div class="recnum">${i+1}</div><div class="rectxt">${rec}</div></div>`).join('');
+  }
+
+  // Violations
+  document.getElementById('proctSum').textContent=r.proctoring_summary||'No issues';
+  const vs=document.getElementById('vlist');
+  if(r.violations&&r.violations.length){
+    const grp={};
+    for(const v of r.violations){const k=(v.type||'?')+'|'+(v.severity||'l');if(!grp[k])grp[k]={type:v.type,sev:v.severity,n:0};grp[k].n++;}
+    vs.innerHTML=Object.values(grp).map(v=>`<div class="vrow vr${(v.sev||'l')[0]}"><span>${v.type}</span><span>${v.n}×</span></div>`).join('');
+  } else vs.innerHTML='<div style="color:#34d399;font-size:.88rem">✅ No violations</div>';
+
+  document.getElementById('encText').textContent=r.encouragement||'Keep improving!';
+}
+</script>
+</body>
+</html>

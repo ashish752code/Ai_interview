@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Interview System</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#060d1f;color:#e0e6ff;font-family:'Inter','Segoe UI',sans-serif;min-height:100vh}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#0d1520}::-webkit-scrollbar-thumb{background:#2d3748;border-radius:3px}
+
+.page{max-width:860px;margin:0 auto;padding:60px 24px 80px;text-align:center}
+.logo{font-size:4rem;margin-bottom:8px}
+h1{font-size:2.8rem;font-weight:800;background:linear-gradient(135deg,#6c7fff,#a78bfa,#34d399);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:0 0 12px}
+.subtitle{color:#8892b0;font-size:1.1rem;margin-bottom:48px;line-height:1.6}
+
+/* server status */
+#serverStatus{padding:10px 18px;border-radius:10px;font-size:.88rem;font-weight:600;margin-bottom:20px;display:none}
+#serverStatus.ok{background:#0a2a1a;color:#34d399;border:1px solid #34d399;display:block}
+#serverStatus.error{background:#2a1a1a;color:#f87171;border:1px solid #f87171;display:block;line-height:1.6}
+
+/* upload card */
+.upload-card{background:#111827;border:2px dashed #2d3748;border-radius:20px;padding:48px 40px;cursor:pointer;transition:.3s;position:relative}
+.upload-card:hover,.upload-card.drag{border-color:#6c7fff;background:#131f35}
+.upload-icon{font-size:3.5rem;margin-bottom:16px}
+.upload-card h2{color:#e0e6ff;font-size:1.4rem;margin:0 0 8px}
+.upload-card p{color:#8892b0;font-size:.95rem;margin:0 0 24px}
+#resumeInput{display:none}
+.upload-btn{background:linear-gradient(135deg,#6c7fff,#a78bfa);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;transition:.2s}
+.upload-btn:hover{opacity:.85;transform:translateY(-1px)}
+.file-types{display:flex;gap:10px;justify-content:center;margin-top:18px}
+.fb{background:#1a2332;color:#6c7fff;padding:4px 12px;border-radius:8px;font-size:.8rem;font-weight:700;border:1px solid #2d3748}
+
+/* error */
+#errMsg{background:#2a1a1a;border:1px solid #f87171;color:#f87171;padding:14px 18px;border-radius:10px;margin-top:16px;font-size:.9rem;line-height:1.6;display:none;text-align:left}
+#errMsg.show{display:block}
+
+/* analysis card */
+#analysisCard{background:#111827;border:1px solid #2d3748;border-radius:20px;padding:36px 40px;margin-top:24px;display:none;text-align:left;animation:fadeIn .4s ease}
+#analysisCard.show{display:block}
+.a-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.avatar{width:56px;height:56px;background:linear-gradient(135deg,#6c7fff,#a78bfa);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.a-info h3{margin:0 0 4px;font-size:1.3rem}
+.a-info p{margin:0;color:#8892b0;font-size:.9rem}
+.exp-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;margin-top:6px}
+.exp-junior{background:#1a3a2a;color:#34d399}
+.exp-mid{background:#1a2a3a;color:#6c7fff}
+.exp-senior{background:#2a1a3a;color:#a78bfa}
+.exp-lead{background:#3a1a1a;color:#f87171}
+
+.sec-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#8892b0;margin:20px 0 10px}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.sk{background:#1a2332;color:#a0b0cc;padding:6px 14px;border-radius:8px;font-size:.85rem;border:1px solid #2d3748}
+.topics-list{display:flex;flex-direction:column;gap:10px}
+.t-row{display:flex;align-items:center;gap:12px}
+.t-name{min-width:160px;font-size:.9rem}
+.t-bar{flex:1;height:8px;background:#1a2332;border-radius:4px;overflow:hidden}
+.t-fill{height:100%;background:linear-gradient(90deg,#6c7fff,#a78bfa);border-radius:4px;transition:width .8s ease}
+.t-pct{font-size:.8rem;color:#6c7fff;min-width:36px;text-align:right}
+.summary-box{color:#8892b0;font-size:.95rem;line-height:1.6;font-style:italic;background:#0d1520;padding:14px 18px;border-radius:10px;border-left:3px solid #6c7fff}
+
+.start-btn{width:100%;background:linear-gradient(135deg,#6c7fff,#a78bfa);color:#fff;border:none;padding:18px;border-radius:14px;font-size:1.1rem;font-weight:800;cursor:pointer;margin-top:28px;transition:.2s;letter-spacing:.5px}
+.start-btn:hover{opacity:.9;transform:translateY(-2px)}
+.start-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:48px 0}
+.fc{background:#111827;border:1px solid #2d3748;border-radius:14px;padding:20px;text-align:center}
+.fi{font-size:1.8rem;margin-bottom:10px}
+.ft{font-size:.88rem;font-weight:700;color:#e0e6ff;margin-bottom:5px}
+.fd{font-size:.78rem;color:#8892b0;line-height:1.4}
+
+/* loading overlay */
+#loadingOverlay{position:fixed;inset:0;background:rgba(6,13,31,.93);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:1000;gap:20px}
+#loadingOverlay.show{display:flex}
+.spinner{width:56px;height:56px;border:4px solid #2d3748;border-top-color:#6c7fff;border-radius:50%;animation:spin .8s linear infinite}
+.lt{color:#e0e6ff;font-size:1.1rem;font-weight:700}
+.ls{color:#8892b0;font-size:.9rem}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:600px){h1{font-size:2rem}.features{grid-template-columns:1fr}.upload-card{padding:28px 16px}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="logo">🤖</div>
+  <h1>AI Interview System</h1>
+  <p class="subtitle">Upload your resume — Gemini AI will analyze your skills<br>and generate a personalized technical interview</p>
+
+  <div id="serverStatus"></div>
+
+  <div class="upload-card" id="uploadCard"
+       onclick="document.getElementById('resumeInput').click()"
+       ondragover="ev(event,'drag')" ondragleave="ev(event,'')" ondrop="drop(event)">
+    <div class="upload-icon">📄</div>
+    <h2>Upload Your Resume</h2>
+    <p>Gemini AI will read your resume and create questions based on your actual skills</p>
+    <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('resumeInput').click()">
+      Choose File
+    </button>
+    <div class="file-types">
+      <span class="fb">PDF</span>
+      <span class="fb">DOCX</span>
+      <span class="fb">TXT</span>
+    </div>
+    <input type="file" id="resumeInput" accept=".pdf,.docx,.txt" onchange="handleFile(this.files[0])">
+  </div>
+
+  <div id="errMsg"></div>
+
+  <div id="analysisCard">
+    <div class="a-header">
+      <div class="avatar">👤</div>
+      <div class="a-info">
+        <h3 id="aName">—</h3>
+        <p id="aLevel">—</p>
+        <span class="exp-badge" id="aBadge">mid</span>
+      </div>
+    </div>
+    <div class="sec-label">📚 Detected Skills</div>
+    <div class="skills-wrap" id="aSkills"></div>
+    <div class="sec-label">🎯 Interview Topics</div>
+    <div class="topics-list" id="aTopics"></div>
+    <div class="sec-label">📋 AI Summary</div>
+    <div class="summary-box" id="aSummary"></div>
+    <button class="start-btn" id="startBtn" onclick="startInterview()">
+      🚀 Start Interview — Fullscreen Mode
+    </button>
+  </div>
+
+  <div class="features">
+    <div class="fc"><div class="fi">🧠</div><div class="ft">Personalized Questions</div><div class="fd">Gemini reads your resume and asks about YOUR actual skills</div></div>
+    <div class="fc"><div class="fi">📊</div><div class="ft">AI Scoring</div><div class="fd">Each answer scored 0–10 with detailed concept feedback</div></div>
+    <div class="fc"><div class="fi">👁️</div><div class="ft">Face Proctoring</div><div class="fd">Camera detects face count — 0 or 2+ faces triggers violation</div></div>
+    <div class="fc"><div class="fi">🖥️</div><div class="ft">Fullscreen Enforced</div><div class="fd">Interview auto-enters fullscreen — exiting ends session</div></div>
+    <div class="fc"><div class="fi">🎙️</div><div class="ft">Voice Answers</div><div class="fd">Speak your answers via microphone or type them</div></div>
+    <div class="fc"><div class="fi">📈</div><div class="ft">Full Report</div><div class="fd">Hiring recommendation, skill gaps, topic breakdown</div></div>
+  </div>
+</div>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="lt" id="lt">Analyzing resume...</div>
+  <div class="ls" id="ls">Gemini AI is extracting your skills</div>
+</div>
+
+<script>
+let sessionData = null;
+
+// Health check
+(async()=>{
+  const el = document.getElementById('serverStatus');
+  try {
+    const r = await fetch('/api/health');
+    const d = await r.json();
+    if (!d.api_key_configured) {
+      el.className='error';
+      el.innerHTML='⚠️ <b>Gemini API key not configured.</b><br>Edit the <code>.env</code> file in the server folder and set:<br><code>GEMINI_API_KEY=your_key_here</code><br>Then restart server.py. Get a free key at: <a href="https://aistudio.google.com/app/apikey" style="color:#f87171">aistudio.google.com</a>';
+    } else {
+      el.className='ok'; el.textContent='✅ Server connected — Gemini AI ready';
+      setTimeout(()=>el.style.opacity='0',3000);
+    }
+  } catch(e) {
+    el.className='error';
+    el.innerHTML='❌ <b>Cannot reach server.</b><br>Make sure you ran: <code>python3 server.py</code><br>Then open: <code>http://localhost:8000/index.html</code>';
+  }
+})();
+
+function ev(e,cls){e.preventDefault();document.getElementById('uploadCard').className='upload-card '+cls}
+function drop(e){e.preventDefault();ev(e,'');const f=e.dataTransfer.files[0];if(f)handleFile(f)}
+
+function showErr(msg){const e=document.getElementById('errMsg');e.innerHTML=msg;e.className='show'}
+function hideErr(){document.getElementById('errMsg').className=''}
+
+function showLoad(t,s){
+  document.getElementById('lt').textContent=t;
+  document.getElementById('ls').textContent=s;
+  document.getElementById('loadingOverlay').className='show';
+}
+function hideLoad(){document.getElementById('loadingOverlay').className=''}
+
+async function handleFile(file) {
+  if (!file) return;
+  hideErr();
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['pdf','docx','txt'].includes(ext)) {
+    showErr('Please upload a PDF, DOCX, or TXT file.'); return;
+  }
+
+  showLoad('Uploading & analyzing resume...','Gemini AI is reading your skills and experience');
+
+  const fd = new FormData();
+  fd.append('file', file);
+
+  try {
+    const res = await fetch('/api/upload-resume', {method:'POST', body:fd});
+    let data;
+    try { data = await res.json(); } catch(e) {
+      hideLoad();
+      showErr('Server returned an invalid response. Check the terminal for errors.');
+      return;
+    }
+    hideLoad();
+    if (!res.ok) {
+      let msg = data.detail || 'Upload failed.';
+      if (res.status===503) msg='⚠️ Gemini API key not configured — edit .env and restart server.py';
+      else if (res.status===422) msg='⚠️ '+msg;
+      showErr(msg); return;
+    }
+    sessionData = data;
+    showAnalysis(data);
+  } catch(err) {
+    hideLoad();
+    showErr('❌ Cannot connect to server. Make sure <code>python3 server.py</code> is running and reload this page.');
+  }
+}
+
+function showAnalysis(d) {
+  document.getElementById('aName').textContent = d.candidate_name||'Candidate';
+  document.getElementById('aLevel').textContent = (d.experience_level||'mid')+' level engineer';
+  const b = document.getElementById('aBadge');
+  b.textContent = d.experience_level||'mid';
+  b.className = 'exp-badge exp-'+(d.experience_level||'mid');
+
+  document.getElementById('aSkills').innerHTML =
+    (d.skills||[]).map(s=>`<span class="sk">${s}</span>`).join('');
+
+  document.getElementById('aTopics').innerHTML =
+    (d.topics||[]).map(t=>{
+      const p=Math.round((t.weight||.2)*100);
+      return `<div class="t-row"><div class="t-name">${t.name}</div><div class="t-bar"><div class="t-fill" style="width:${p}%"></div></div><div class="t-pct">${p}%</div></div>`;
+    }).join('');
+
+  document.getElementById('aSummary').textContent = d.summary||'Resume analyzed.';
+
+  const card = document.getElementById('analysisCard');
+  card.className = 'show';
+  card.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+async function startInterview() {
+  if (!sessionData) { showErr('Please upload a resume first.'); return; }
+  const btn = document.getElementById('startBtn');
+  btn.disabled=true; btn.textContent='Preparing questions...';
+
+  showLoad('Generating personalized questions...','Gemini is crafting questions from your skills');
+
+  try {
+    const res = await fetch('/api/start-interview',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({session_id:sessionData.session_id})
+    });
+    const data = await res.json();
+    hideLoad();
+    if (!res.ok) {
+      showErr(data.detail||'Failed to start interview');
+      btn.disabled=false; btn.textContent='🚀 Start Interview — Fullscreen Mode'; return;
+    }
+    localStorage.setItem('ivSession', JSON.stringify({
+      session_id: sessionData.session_id,
+      candidate_name: sessionData.candidate_name,
+      questions: data.questions,
+      skills: sessionData.skills,
+    }));
+    window.location.href = 'interview.html';
+  } catch(err) {
+    hideLoad();
+    showErr('Failed to start — check server is running.');
+    btn.disabled=false; btn.textContent='🚀 Start Interview — Fullscreen Mode';
+  }
+}
+</script>
+</body>
+</html>
