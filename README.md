@@ -1,19 +1,19 @@
-# 🤖 AI Interview System
+🤖 AI Interview System
 
-An AI-powered mock interview platform that uses **Google Gemini AI** to generate personalized interview questions, evaluate answers, and provide a detailed performance report.
+An AI-powered mock interview platform that uses Google Gemini AI to generate personalized interview questions, evaluate answers, and provide a detailed performance report.
 
-## 🚀 Live Demo
+🚀 Live Demo
 
 👉 https://ai-interview1-0wg4.onrender.com/index.html
 
 
-## 💻 GitHub Repository
+ 💻 GitHub Repository
 
 👉 **[View Source Code on GitHub](https://github.com/ashish752code/Ai_interview)**
 
 ---
 
-## 📌 About The Project
+ 📌 About The Project
 
 The AI Interview System is a web-based application designed to simulate a real interview experience.
 
@@ -31,9 +31,9 @@ During the interview, the system:
 
 ---
 
-## ✨ Features
+ ✨ Features
 
-### 🧠 AI-Powered Interview
+🧠 AI-Powered Interview
 
 Uses Google Gemini AI to generate personalized interview questions based on the candidate's resume.
 
