@@ -1,48 +1,110 @@
-# 🤖 AI Interview System v3.0
+# 🤖 AI Interview System
 
-## ⚡ Super Simple Setup — 3 Steps Only
+An AI-powered mock interview platform that uses **Google Gemini AI** to generate personalized interview questions, evaluate answers, and provide a detailed performance report.
 
-### Step 1: Install requirements
-```bash
-pip install google-generativeai PyPDF2 python-docx
-```
+## 🚀 Live Demo
 
-### Step 2: Add your Gemini API key
-Edit the `.env` file and replace `your_api_key_here` with your key.
+👉 https://ai-interview1-0wg4.onrender.com/index.html
 
-Get a FREE key at: https://aistudio.google.com/app/apikey
 
-### Step 3: Run
-```bash
-python3 server.py
-```
+## 💻 GitHub Repository
 
-Then open your browser at: **http://localhost:8000/index.html**
+👉 **[View Source Code on GitHub](https://github.com/ashish752code/Ai_interview)**
 
 ---
 
-## 📁 Files
-```
-ai_interview/
-├── server.py       ← Run this! (built-in Python http.server, no FastAPI needed)
-├── index.html      ← Upload resume page
-├── interview.html  ← Live interview
-├── report.html     ← Results
-└── .env            ← Add your GEMINI_API_KEY here
-```
+## 📌 About The Project
 
-## ✅ Features
-- 🧠 Gemini AI analyzes your resume → generates personalized questions
-- 📊 AI scores each answer 0-10 with feedback
-- 👁️ Camera face detection (0 faces or 2+ faces = violation)
-- 🖥️ Auto fullscreen — exiting fullscreen terminates interview
-- 🎙️ Voice answers via microphone
-- 📈 Full report with hiring recommendation
+The AI Interview System is a web-based application designed to simulate a real interview experience.
 
-## ❓ Troubleshooting
+The application analyzes a candidate's resume and uses **Google Gemini AI** to generate personalized interview questions.
 
-**"Cannot reach server"** → Make sure `python3 server.py` is running first, then open http://localhost:8000/index.html
+During the interview, the system:
 
-**"Gemini API key not configured"** → Edit `.env` file and set your key, then restart server.py
+- Generates AI-powered interview questions
+- Evaluates candidate answers
+- Provides scores and feedback
+- Supports voice-based answers
+- Uses camera-based face detection
+- Detects interview violations
+- Generates a final interview performance report
+
+---
+
+## ✨ Features
+
+### 🧠 AI-Powered Interview
+
+Uses Google Gemini AI to generate personalized interview questions based on the candidate's resume.
+
+ 📄 Resume Analysis
+
+Upload your resume and allow the system to generate questions based on your:
+
+- Skills
+- Education
+- Projects
+- Experience
+- Technical knowledge
+
+📊 AI Answer Evaluation
+
+Each answer is evaluated by AI and receives:
+
+- Score from 0–10
+- Feedback
+- Strengths
+- Areas for improvement
+
+ 🎙️ Voice Interview
+
+Candidates can answer interview questions using their microphone.
+
+ 📷 Face Detection
+
+The system monitors the camera during the interview.
+
+It can detect:
+
+- No face detected
+- Multiple faces detected
+- Interview violations
+
+🖥️ Fullscreen Interview
+
+The interview runs in fullscreen mode to simulate a real online assessment environment.
+
+📈 Final Report
+
+After completing the interview, the application generates a detailed report containing the candidate's performance and hiring recommendation.
+
+---
+
+ 🛠️ Technologies Used
+
+| Technology | Purpose |
+|---|---|
+| Python | Backend server |
+| HTML | Frontend structure |
+| CSS | User interface |
+| JavaScript | Frontend functionality |
+| Google Gemini AI | AI interview & evaluation |
+| PyPDF2 | PDF resume processing |
+| python-docx | DOCX resume processing |
+| Python HTTP Server | Backend server |
+
+---
+
+📂 Project Structure
+
+```text
+AI-Interview/
+│
+├── server.py
+├── index.html
+├── interview.html
+├── report.html
+├── README.md
+└── requirements.txt
 
 **Resume upload fails** → Make sure the file is PDF, DOCX, or TXT and under 10MB
